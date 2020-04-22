@@ -54,7 +54,7 @@ This weewx extension was modified from https://github.com/brewster76/util-archer
        wee_database weewx.conf --reconfigure
        ```
        **Make sure you know what you're doing at this point, you can potentially corrupt/lose your archive data.**
-       The weewx customization guide covers this in a lot more detail.
+       The weewx customization guide covers this in a lot more detail - see http://www.weewx.com/docs/customizing.htm#archive_database
    5. Tell Weewx about the units for this new type
         Add this to user/extensions.py:
         ```python
