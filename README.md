@@ -17,12 +17,13 @@ This weewx extension was modified from https://github.com/brewster76/util-archer
    ```
    3. Add [sunshine_time] to the database schema so tables include this new observation field.
        In weewx.conf, change the wx_binding schema from schemas.wview.schema to user.sunduration.schema_with_sunshine_time
+       ### with sqlite database :
        ```python
         [DataBindings]
             [[wx_binding]]
                 # The database must match one of the sections in [Databases].
                 # This is likely to be the only option you would want to change.
-                database = archive_sqlite
+                database = archive_sqlite 
                 # The name of the table within the database
                 table_name = archive
                 # The manager handles aggregation of data for historical summaries
@@ -31,6 +32,22 @@ This weewx extension was modified from https://github.com/brewster76/util-archer
                 # It is *only* used when the database is created.
                 #schema = schemas.wview.schema
                 schema = user.sunduration.schema_with_sunshine_time
+         ```
+       ### with sqlite database :
+          ```python
+           [DataBindings]
+               [[wx_binding]]
+                   # The database must match one of the sections in [Databases].
+                   # This is likely to be the only option you would want to change.
+                   database = archive_mysql 
+                   # The name of the table within the database
+                   table_name = archive
+                   # The manager handles aggregation of data for historical summaries
+                   manager = weewx.wxmanager.WXDaySummaryManager
+                   # The schema defines the structure of the database.
+                   # It is *only* used when the database is created.
+                   #schema = schemas.wview.schema
+                   schema = user.sunduration.schema_with_sunshine_time
           ```
    4. Shutdown Weewx and update your database to bring in the new field.
        ```python
@@ -49,5 +66,5 @@ This weewx extension was modified from https://github.com/brewster76/util-archer
          ```
    6. Use [sunshine_time] in your graphs and html template tags.
    
-    Lots more detail on this process can be found here:
-        http://www.weewx.com/docs/customizing.htm#Adding_a_new_observation_type
+   Lots more detail on this process can be found here:
+   http://www.weewx.com/docs/customizing.htm#Adding_a_new_observation_type
