@@ -16,7 +16,7 @@ This weewx extension was modified from https://github.com/brewster76/util-archer
                 process_services = user.sunduration.SunshineDuration, weewx.engine.StdConvert, weewx.engine.StdCalibrate, weewx.engine.StdQC, weewx.wxservices.StdWXCalculate
    ```
    3. Add [sunshine_time] to the database schema so tables include this new observation field.
-       In weewx.conf, change the wx_binding schema from schemas.wview.schema to user.sunduration.schema_with_sunshine_time
+       In weewx.conf, change the wx_binding schema from schemas.wview.schema to user.sunduration.schema_with_sunshine_time:
        ### with sqlite database :
        ```python
         [DataBindings]
