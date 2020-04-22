@@ -141,7 +141,7 @@ Cette extensin weewx a été écrite d'après  https://github.com/brewster76/uti
        ```python
        wee_database weewx.conf --reconfigure
        ```
-       Cette commande va créer une nouvelle base de donnée (**weewx.sdb_new** si vous utilisez SQLite, **weewx_new** si vous utilisez MySQL) en utilisant le nouveau schéma et va transférer les donnéesdans cette nouvelle base de donnée.
+       Cette commande va créer une nouvelle base de donnée (**weewx.sdb_new** si vous utilisez SQLite, **weewx_new** si vous utilisez MySQL) en utilisant le nouveau schéma et va transférer les données dans cette nouvelle base de donnée.
        
    5. Configurer Weewx pour la nouvelle base de donnée.
    **Soyez sûrs de ce que vous faites à ce point, car vous pouvez potentiellement corompre ou perdre vos données d'archives. Il vaut mieux faire une sauvegarde de la base de donnée avant..**
