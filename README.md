@@ -54,9 +54,26 @@ This weewx extension was modified from https://github.com/brewster76/util-archer
        ```python
        wee_database weewx.conf --reconfigure
        ```
-       **Make sure you know what you're doing at this point, you can potentially corrupt/lose your archive data.**
-       
-   5. Tell Weewx about the units for this new type
+      This will create a new database (nominally, weewx.sdb_new if you are using SQLite, weewx_new if you are using MySQL) using the new schema and populate it with data from the old database.
+   5. Shuffle the databases. Now arrange things so WeeWX can find the new database.
+   **Make sure you know what you're doing at this point, you can potentially corrupt/lose your archive data.**
+   You can either shuffle the databases around so the new database has the same name as the old database, or edit weewx.conf to use the new database name. To do the former:
+
+For SQLite:
+  ```
+    cd SQLITE_ROOT
+    mv weewx.sdb_new weewx.sdb
+  ```
+
+For Mysql: 
+  ```
+    mysql -u <username> --password=<mypassword>
+    mysql> DROP DATABASE weewx;                             # Delete the old database
+    mysql> CREATE DATABASE weewx;                           # Create a new one with the same name
+    mysql> RENAME TABLE weewx_new.archive TO weewx.archive; # Rename to the nominal name
+  ```
+  
+   6. Tell Weewx about the units for this new type
         Add this to user/extensions.py:
         ```python
          #
@@ -65,7 +82,7 @@ This weewx extension was modified from https://github.com/brewster76/util-archer
          import weewx.units
          weewx.units.obs_group_dict['sunshine_time'] = 'group_interval'
          ```
-   6. Use [sunshine_time] in your graphs and html template tags.
+   7. Use [sunshine_time] in your graphs and html template tags.
    
    Lots more detail on this process can be found here:http://www.weewx.com/docs/customizing.htm#archive_database
    
@@ -124,9 +141,28 @@ Cette extensin weewx a été écrite d'après  https://github.com/brewster76/uti
        ```python
        wee_database weewx.conf --reconfigure
        ```
-       **Soyez sûrs de ce que vous faites à ce point, car vous pouvez potentiellement corrompre ou perdre vos données d'archives. Il vaut mieux faire une sauvegarde de la base de donnée avant.**
+       Cette commande va créer une nouvelle base de donnée (**weewx.sdb_new** si vous utilisez SQLite, **weewx_new** si vous utilisez MySQL) en utilisant le nouveau schéma et va transférer les donnéesdans cette nouvelle base de donnée.
        
-   5. Configurer dans weewx l'unité utilisée pour ce nouveau champ.
+   5. Configurer Weewx pour la nouvelle base de donnée.
+   **Soyez sûrs de ce que vous faites à ce point, car vous pouvez potentiellement corompre ou perdre vos données d'archives. Il vaut mieux faire une sauvegarde de la base de donnée avant..**
+   
+   Vous pouvez le faire soit en renommant la nouvelle base de donnée, ou en modifiant dans weewx.conf le nom de la base de données à utiliser. Pour renommer la nouvelle base de données:
+
+Pour SQLite:
+  ```
+    cd SQLITE_ROOT
+    mv weewx.sdb_new weewx.sdb
+  ```
+
+Pour Mysql: 
+  ```
+    mysql -u <username> --password=<mypassword>
+    mysql> DROP DATABASE weewx;                             # Delete the old database
+    mysql> CREATE DATABASE weewx;                           # Create a new one with the same name
+    mysql> RENAME TABLE weewx_new.archive TO weewx.archive; # Rename to the nominal name
+  ```
+       
+   6. Configurer dans weewx l'unité utilisée pour ce nouveau champ.
       Ajouter à la fin de /usr/share/weewx/user/extensions.py ( ou /home/weewx/bin/user/extensions.py selon l'installation utilisée)
         ```python
          #
@@ -135,7 +171,7 @@ Cette extensin weewx a été écrite d'après  https://github.com/brewster76/uti
          import weewx.units
          weewx.units.obs_group_dict['sunshine_time'] = 'group_interval'
          ```
-   6. Utiliser le tag [sunshine_time] pour vos graphiques ou templates.
+   7. Utiliser le tag [sunshine_time] pour vos graphiques ou templates.
    
    Pour plus de détails sur l'ajout d'un nouveau paramètre, voir::
    http://www.weewx.com/docs/customizing.htm#archive_database
