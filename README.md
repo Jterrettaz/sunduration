@@ -55,7 +55,7 @@ This weewx extension was modified from https://github.com/brewster76/util-archer
        wee_database weewx.conf --reconfigure
        ```
        **Make sure you know what you're doing at this point, you can potentially corrupt/lose your archive data.**
-       The weewx customization guide covers this in a lot more detail - see http://www.weewx.com/docs/customizing.htm#archive_database
+       
    5. Tell Weewx about the units for this new type
         Add this to user/extensions.py:
         ```python
@@ -67,8 +67,7 @@ This weewx extension was modified from https://github.com/brewster76/util-archer
          ```
    6. Use [sunshine_time] in your graphs and html template tags.
    
-   Lots more detail on this process can be found here:
-   http://www.weewx.com/docs/customizing.htm#Adding_a_new_observation_type
+   Lots more detail on this process can be found here:http://www.weewx.com/docs/customizing.htm#archive_database
    
 # sunduration
 Ajoute à Weewx un nouveau paramètre contenant la durée d'ensoleillement: [sunshine_time]
@@ -126,7 +125,7 @@ Cette extensin weewx a été écrite d'après  https://github.com/brewster76/uti
        wee_database weewx.conf --reconfigure
        ```
        **Soyez sûrs de ce que vous faites à ce point, car vous pouvez potentiellement corrompre ou perdre vos données d'archives. Il vaut mieux faire une sauvegarde de la base de donnée avant.**
-       La documentation de weewx "customization guide"  explique ceci avec plus de détails - voir http://www.weewx.com/docs/customizing.htm#archive_database
+       
    5. Configurer dans weewx l'unité utilisée pour ce nouveau champ.
       Ajouter à la fin de /usr/share/weewx/user/extensions.py ( ou /home/weewx/bin/user/extensions.py selon l'installation utilisée)
         ```python
@@ -139,4 +138,4 @@ Cette extensin weewx a été écrite d'après  https://github.com/brewster76/uti
    6. Utiliser le tag [sunshine_time] pour vos graphiques ou templates.
    
    Pour plus de détails sur l'ajout d'un nouveau paramètre, voir::
-   http://www.weewx.com/docs/customizing.htm#Adding_a_new_observation_type
+   http://www.weewx.com/docs/customizing.htm#archive_database
