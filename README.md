@@ -59,7 +59,7 @@ This weewx extension was modified from https://github.com/brewster76/util-archer
         Add this to user/extensions.py:
         ```python
          #
-         # Units for sunshine_days calculated field
+         # Units for sunshine_time calculated field
          #
          import weewx.units
          weewx.units.obs_group_dict['sunshine_time'] = 'group_interval'
