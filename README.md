@@ -127,8 +127,8 @@ Cette extensin weewx a été écrite d'aprèz  https://github.com/brewster76/uti
        ```
        **Soyez sûrs de ce que vous faites à ce point, car vous pouvez potentiellement corrompre ou perdre vos données d'archives. Il vaut mieux faire une sauvegarde de la base de donnée avant.**
        La documentation de weewx "customization guide"  explique ceci avec plus de détails - voir http://www.weewx.com/docs/customizing.htm#archive_database
-   5. Configurer dans weewx l'unité utilisée pour ce nouveau champ
-        ajouter dans user/extensions.py:
+   5. Configurer dans weewx l'unité utilisée pour ce nouveau champ.
+      Ajouter à la fin de /usr/share/weewx/user/extensions.py ( ou /home/weewx/bin/user/extensions.py selon l'installation utilisée)
         ```python
          #
          # Units for sunshine_time calculated field
