@@ -33,7 +33,7 @@ This weewx extension was modified from https://github.com/brewster76/util-archer
                 #schema = schemas.wview.schema
                 schema = user.sunduration.schema_with_sunshine_time
          ```
-       ### with sqlite database :
+       ### with mysql database :
           ```python
            [DataBindings]
                [[wx_binding]]
