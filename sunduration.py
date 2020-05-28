@@ -18,7 +18,6 @@ class SunshineDuration(StdService):
         """Gets called on a new archive record event."""
         seuil = 0
         coeff = 0.9
-        tempe = event.record.get('outTemp', 25.0)
         radiation = event.record.get('radiation')
         event.record['sunshine_time'] = 0.0
         if radiation is not None:
@@ -43,8 +42,7 @@ class SunshineDuration(StdService):
                 (pi / 180) * latitude) * cos((pi / 180) * declinaison) * cos((pi / 180) * angle_horaire)) * (180 / pi)
             if hauteur_soleil > 3:
                 seuil = (0.73 + 0.06 * cos((pi / 180) * 360 * dayofyear / 365)) *1080 * pow((sin(pi / 180) * hauteur_soleil), 1.25) * coeff
-                mesure = (((tempe - 25.0) * (-0.0012) * radiation) + radiation)
-                if mesure > seuil:
+                if radiation > seuil:
                     event.record['sunshine_time'] = event.record['interval']
 
         syslog.syslog(syslog.LOG_DEBUG, "Calculated sunshine_time = %f, based on radiation = %f, and threshold = %f" %
