@@ -98,12 +98,12 @@ class SunshineDuration(StdService):
                 if radiation > seuil:
                     self.sunshineSeconds += self.LoopDuration
 
-            logdbg("Calculated LOOP sunshine_time = %f, based on radiation = %f, and threshold = %f" % (self.LoopDuration, radiation, seuil))
+            logdbg("Calculated LOOP sunshine duration (seconds) = %f, based on radiation = %f, and threshold = %f" % (self.LoopDuration, radiation, seuil))
 
 
     def newArchiveRecord(self, event):
         event.record['sunshine_time'] = self.sunshineSeconds/60
         self.sunshineSeconds = 0
-        loginf("Calculated sunshine_time for archive period = %f" % (event.record['sunshine_time']))
+        loginf("Calculated sunshine duration (minutes) for archive period = %f" % (event.record['sunshine_time']))
         
     schema_with_sunshine_time = schemas.wview.schema + [('sunshine_time', 'REAL')]
