@@ -4,6 +4,7 @@ from datetime import datetime
 import time
 import weewx
 from weewx.wxengine import StdService
+import schemas.wview
 
 try:
     # Test for new-style weewx logging by trying to import weeutil.logger
@@ -65,7 +66,6 @@ class SunshineDuration(StdService):
         """Gets called on a new archive record event."""
         seuil = 0
         coeff = 0.9
-        tempe = event.packet.get('outTemp', 25.0)
         radiation = event.packet.get('radiation')
         if radiation is not None:
             if self.lastdateTime == 0:
@@ -95,8 +95,7 @@ class SunshineDuration(StdService):
             if hauteur_soleil > 3:
                 seuil = (0.73 + 0.06 * cos((pi / 180) * 360 * dayofyear / 365)) * 1080 * pow(
                     (sin(pi / 180) * hauteur_soleil), 1.25) * coeff
-                mesure = (((tempe - 25.0) * (-0.0012) * radiation) + radiation)
-                if mesure > seuil and radiation > 20:
+                if radiation > seuil:
                     self.sunshineSeconds += self.LoopDuration
 
             logdbg("Calculated LOOP sunshine_time = %f, based on radiation = %f, and threshold = %f" % (self.LoopDuration, radiation, seuil))
@@ -106,3 +105,5 @@ class SunshineDuration(StdService):
         event.record['sunshine_time'] = self.sunshineSeconds/60
         self.sunshineSeconds = 0
         loginf("Calculated sunshine_time for archive period = %f" % (event.record['sunshine_time']))
+        
+    schema_with_sunshine_time = schemas.wview.schema + [('sunshine_time', 'REAL')]
