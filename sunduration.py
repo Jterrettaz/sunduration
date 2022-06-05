@@ -123,7 +123,7 @@ class SunshineDuration(StdService):
             seuil = (0.73 + 0.06 * cos((pi / 180) * 360 * dayofyear / 365)) * 1080 * pow(
                 (sin(pi / 180) * hauteur_soleil), 1.25) * coeff
         else :
-            seuil=800
+            seuil=0
         return seuil
     
     schema_with_sunshine_time = schemas.wview.schema + [('sunshine_time', 'REAL')]
