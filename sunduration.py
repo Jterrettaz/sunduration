@@ -77,7 +77,7 @@ class SunshineDuration(StdService):
 
     def newArchiveRecord(self, event):
         """Gets called on a new archive record event."""
-        if self.lastdateTime == 0 or self.firstArchive:  # LOOP packets not yet captured. This is an archive record extracted from datalogger at start  or first archive record after weewx start
+        if self.lastdateTime == 0 or self.firstArchive:  # LOOP packets not yet captured : missing archive record extracted from datalogger at start OR first archive record after weewx start
             radiation = event.record.get('radiation')
             event.record['sunshine_time'] = 0.0
             event.record['sunshineThreshold'] = 0.0
