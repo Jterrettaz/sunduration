@@ -119,8 +119,11 @@ class SunshineDuration(StdService):
         angle_horaire = (tempsolaire - 12) * 15
         hauteur_soleil = asin(sin((pi / 180) * latitude) * sin((pi / 180) * declinaison) + cos(
             (pi / 180) * latitude) * cos((pi / 180) * declinaison) * cos((pi / 180) * angle_horaire)) * (180 / pi)
-        seuil = (0.73 + 0.06 * cos((pi / 180) * 360 * dayofyear / 365)) * 1080 * pow(
-            (sin(pi / 180) * hauteur_soleil), 1.25) * coeff
+        if hauteur_soleil > 3:
+            seuil = (0.73 + 0.06 * cos((pi / 180) * 360 * dayofyear / 365)) * 1080 * pow(
+                (sin(pi / 180) * hauteur_soleil), 1.25) * coeff
+        else :
+            seuil=800
         return seuil
     
     schema_with_sunshine_time = schemas.wview.schema + [('sunshine_time', 'REAL')]
