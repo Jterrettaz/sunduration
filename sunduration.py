@@ -113,7 +113,6 @@ class SunshineDuration(StdService):
         declinaison = asin(0.006918 - 0.399912 * cos((pi / 180) * theta) + 0.070257 * sin(
             (pi / 180) * theta) - 0.006758 * cos(2 * (pi / 180) * theta) + 0.000908 * sin(
             2 * (pi / 180) * theta)) * (180 / pi)
-
         minutesjour = utcdate.hour * 60 + utcdate.minute
         tempsolaire = (minutesjour + corrtemps + equatemps) / 60
         angle_horaire = (tempsolaire - 12) * 15
