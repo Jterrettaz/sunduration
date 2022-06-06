@@ -93,7 +93,7 @@ class SunshineDuration(StdService):
                 event.record['sunshine_time'], event.record['radiation'], event.record['sunshineThreshold']))
         else:
             event.record['sunshineThreshold'] = self.lastSeuil
-            event.record['sunshine_time'] = self.sunshineSeconds / 60
+            event.record['sunshine_time'] = int(self.sunshineSeconds / 60)
             loginf("Sunshine duration from loop packets = %f min, last radiation = %f, and last threshold = %f" % (
                 event.record['sunshine_time'], event.record['radiation'], event.record['sunshineThreshold']))
 
