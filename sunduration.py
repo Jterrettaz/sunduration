@@ -101,8 +101,6 @@ class SunshineDuration(StdService):
         coeff = 0.9  # change to calibrate with your sensor
         utcdate = datetime.utcfromtimestamp(mydatetime)
         dayofyear = int(time.strftime("%j", time.gmtime(mydatetime)))
-        monthofyear = int(time.strftime("%m", time.gmtime(mydatetime)))
-        coeff = self.calib_dict[monthofyear]  # monthly calibration coefficient
         theta = 360 * dayofyear / 365
         equatemps = 0.0172 + 0.4281 * cos((pi / 180) * theta) - 7.3515 * sin(
             (pi / 180) * theta) - 3.3495 * cos(2 * (pi / 180) * theta) - 9.3619 * sin(
@@ -120,12 +118,11 @@ class SunshineDuration(StdService):
         hauteur_soleil = asin(sin((pi / 180) * latitude) * sin((pi / 180) * declinaison) + cos(
             (pi / 180) * latitude) * cos((pi / 180) * declinaison) * cos((pi / 180) * angle_horaire)) * (180 / pi)
         if hauteur_soleil > 3:
-            seuil = (0.73 + 0.06 * cos((pi / 180) * 360 * dayofyear / 365)) * 1080 * pow(
-                (sin(pi / 180) * hauteur_soleil), 1.25) * coeff
+            seuil = (0.97 + 0.21 * cos((pi / 180) * 360 * dayofyear / 365)) * 860 * pow(
+                (sin(pi / 180) * hauteur_soleil), 1.25) 
         else :
             seuil=0
         return seuil
     
-    calib_dict = {1: 1.35, 2: 1.3, 3: 1.1, 4: 1, 5: 0.97, 6: 0.94, 7: 0.94, 8: 0.97, 9: 1, 10: 1.1, 11: 1.3, 12: 1.35}
     
     schema_with_sunshine_time = schemas.wview.schema + [('sunshine_time', 'REAL')]
