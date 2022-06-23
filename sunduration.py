@@ -90,7 +90,7 @@ class SunshineDuration(StdService):
                 
             loginf("Estimated sunshine duration from archive record= %f min, radiation = %f, and threshold = %f" % (
                 event.record['sunshine_time'], event.record['radiation'], self.lastSeuil))
-        else
+        else:
             event.record['sunshine_time'] = round(self.sunshineSeconds / 60)
             loginf("Sunshine duration from loop packets = %f min, last radiation = %f, and last threshold = %f" % (
                 event.record['sunshine_time'], event.record['radiation'], self.lastSeuil))
