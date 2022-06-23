@@ -118,7 +118,7 @@ class SunshineDuration(StdService):
         hauteur_soleil = asin(sin((pi / 180) * latitude) * sin((pi / 180) * declinaison) + cos(
             (pi / 180) * latitude) * cos((pi / 180) * declinaison) * cos((pi / 180) * angle_horaire)) * (180 / pi)
         if hauteur_soleil > 0:
-            seuil = (0.97 + 0.2 * cos((pi / 180) * 360 * dayofyear / 365)) * 830 * pow(
+            seuil = (0.7 + 0.085 * cos((pi / 180) * 360 * dayofyear / 365)) * 1080 * pow(
                 (sin(pi / 180) * hauteur_soleil), 1.25) 
         else :
             seuil=0
