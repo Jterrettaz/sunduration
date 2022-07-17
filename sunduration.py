@@ -59,6 +59,7 @@ class SunshineDuration(StdService):
         self.sunshineSeconds = 0
         self.lastSeuil = 0
         self.firstArchive = True
+        self.cum_time=0
 
     def newLoopPacket(self, event):
         """Gets called on a new loop packet event."""
@@ -71,6 +72,7 @@ class SunshineDuration(StdService):
             seuil = self.sunshineThreshold(event.packet.get('dateTime'))
             if radiation > seuil and radiation > 20 and seuil > 0:
                 self.sunshineSeconds += self.LoopDuration
+            self.cum_time += self.LoopDuration
             self.lastSeuil = seuil
             logdbg("Calculated LOOP sunshine_time = %f, based on radiation = %f, and threshold = %f" % (
                 self.LoopDuration, radiation, seuil))
@@ -91,11 +93,12 @@ class SunshineDuration(StdService):
             loginf("Estimated sunshine duration from archive record= %f min, radiation = %f, and threshold = %f" % (
                 event.record['sunshine_time'], event.record['radiation'], self.lastSeuil))
         else:
-            event.record['sunshine_time'] = self.sunshineSeconds / 60
+            event.record['sunshine_time'] = self.sunshineSeconds/self.cum_time * event.record['interval']
             loginf("Sunshine duration from loop packets = %f min, last radiation = %f, and last threshold = %f" % (
                 event.record['sunshine_time'], event.record['radiation'], self.lastSeuil))
 
         self.sunshineSeconds = 0
+        self.cum_time = 0
 
     def sunshineThreshold(self, mydatetime):
         coeff = 0.9  # change to calibrate with your sensor
