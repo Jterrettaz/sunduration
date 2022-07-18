@@ -36,7 +36,7 @@ At the start of weewx, missing archive records imported from the datalogger have
                 schema = user.sunduration.schema_with_sunshine_time
          ```
        ### with mysql database :
-          ```python
+       ```python
            [DataBindings]
                [[wx_binding]]
                    # The database must match one of the sections in [Databases].
