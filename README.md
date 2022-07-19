@@ -51,30 +51,12 @@ At the start of weewx, missing archive records imported from the datalogger have
                    #schema = schemas.wview.schema
                    schema = user.sunduration.schema_with_sunshine_time
           ```
-   4. Shutdown Weewx and update your database to bring in the new field.
+   4. Shutdown Weewx and update your database to bring in the new field. (Weewx v4.5.0 or newer)
        ```python
-       wee_database weewx.conf --reconfigure
+       wee_database --add-column=sunshine_time
        ```
-      This will create a new database (nominally, weewx.sdb_new if you are using SQLite, weewx_new if you are using MySQL) using the new schema and populate it with data from the old database.
-   5. Shuffle the databases. Now arrange things so WeeWX can find the new database.
-   **Make sure you know what you're doing at this point, you can potentially corrupt/lose your archive data.**
-   You can either shuffle the databases around so the new database has the same name as the old database, or edit weewx.conf to use the new database name. To do the former:
-
-For SQLite:
-  ```
-    cd SQLITE_ROOT
-    mv weewx.sdb_new weewx.sdb
-  ```
-
-For Mysql: 
-  ```
-    mysql -u <username> --password=<mypassword>
-    mysql> DROP DATABASE weewx;                             # Delete the old database
-    mysql> CREATE DATABASE weewx;                           # Create a new one with the same name
-    mysql> RENAME TABLE weewx_new.archive TO weewx.archive; # Rename to the nominal name
-  ```
   
-   6. Tell Weewx about the units for this new type
+   5. Tell Weewx about the units for this new type
         Add this to user/extensions.py:
         ```python
          #
@@ -140,32 +122,14 @@ Au démarrage de weewx, des enregistrement d'archives manquants sont éventuelle
                    #schema = schemas.wview.schema
                    schema = user.sunduration.schema_with_sunshine_time
           ```
-   4.  Stopper Weewx  et mettre a jour la base de donnee avec le nouveau champ "sunshine_time".
+   4.  Stopper Weewx  et mettre a jour la base de donnee avec le nouveau champ "sunshine_time (Weewx V. 4.5.0 ou plus récent)
        ```python
-       wee_database weewx.conf --reconfigure
+       wee_database --add-column=sunshine_time
        ```
-       Cette commande va créer une nouvelle base de donnée (**weewx.sdb_new** si vous utilisez SQLite, **weewx_new** si vous utilisez MySQL) en utilisant le nouveau schéma et va transférer les données dans cette nouvelle base de donnée.
+       et confirmer la création du nouveau champ en pressant "Y"
        
-   5. Configurer Weewx pour la nouvelle base de donnée.
-   **Soyez sûrs de ce que vous faites à ce point, car vous pouvez potentiellement corompre ou perdre vos données d'archives. Il vaut mieux faire une sauvegarde de la base de donnée avant..**
-   
-   Vous pouvez le faire soit en renommant la nouvelle base de donnée, ou en modifiant dans weewx.conf le nom de la base de données à utiliser. Pour renommer la nouvelle base de données:
-
-Pour SQLite:
-  ```
-    cd SQLITE_ROOT
-    mv weewx.sdb_new weewx.sdb
-  ```
-
-Pour Mysql: 
-  ```
-    mysql -u <username> --password=<mypassword>
-    mysql> DROP DATABASE weewx;                             # Delete the old database
-    mysql> CREATE DATABASE weewx;                           # Create a new one with the same name
-    mysql> RENAME TABLE weewx_new.archive TO weewx.archive; # Rename to the nominal name
-  ```
        
-   6. Configurer dans weewx l'unité utilisée pour ce nouveau champ.
+   5. Configurer dans weewx l'unité utilisée pour ce nouveau champ.
       Ajouter à la fin de /usr/share/weewx/user/extensions.py ( ou /home/weewx/bin/user/extensions.py selon l'installation utilisée)
         ```python
          #
