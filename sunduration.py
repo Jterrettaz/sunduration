@@ -4,7 +4,6 @@ from datetime import datetime
 import time
 import weewx
 from weewx.wxengine import StdService
-import schemas.wview
 
 try:
     # Test for new-style weewx logging by trying to import weeutil.logger
@@ -126,5 +125,4 @@ class SunshineDuration(StdService):
         else :
             seuil=0
         return seuil
-    
-schema_with_sunshine_time = schemas.wview.schema + [('sunshine_time', 'REAL')]
+
