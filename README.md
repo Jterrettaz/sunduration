@@ -17,46 +17,13 @@ At the start of weewx, missing archive records imported from the datalogger have
                 prep_services = weewx.engine.StdTimeSynch
                 process_services = user.sunduration.SunshineDuration, weewx.engine.StdConvert, weewx.engine.StdCalibrate, weewx.engine.StdQC, weewx.wxservices.StdWXCalculate
    ```
-   3. Add [sunshine_time] to the database schema so tables include this new observation field.
-       In weewx.conf, change the wx_binding schema from schemas.wview.schema to user.sunduration.schema_with_sunshine_time:
-       ### with sqlite database :
-       ```python
-        [DataBindings]
-            [[wx_binding]]
-                # The database must match one of the sections in [Databases].
-                # This is likely to be the only option you would want to change.
-                database = archive_sqlite 
-                # The name of the table within the database
-                table_name = archive
-                # The manager handles aggregation of data for historical summaries
-                manager = weewx.wxmanager.WXDaySummaryManager
-                # The schema defines the structure of the database.
-                # It is *only* used when the database is created.
-                #schema = schemas.wview.schema
-                schema = user.sunduration.schema_with_sunshine_time
-         ```
-       ### with mysql database :
-       ```python
-           [DataBindings]
-               [[wx_binding]]
-                   # The database must match one of the sections in [Databases].
-                   # This is likely to be the only option you would want to change.
-                   database = archive_mysql 
-                   # The name of the table within the database
-                   table_name = archive
-                   # The manager handles aggregation of data for historical summaries
-                   manager = weewx.wxmanager.WXDaySummaryManager
-                   # The schema defines the structure of the database.
-                   # It is *only* used when the database is created.
-                   #schema = schemas.wview.schema
-                   schema = user.sunduration.schema_with_sunshine_time
-          ```
-   4. Shutdown Weewx and update your database to bring in the new field. (Weewx v4.5.0 or newer)
+
+   3. Shutdown Weewx and update your database to bring in the new field. (Weewx v4.5.0 or newer)
        ```python
        wee_database --add-column=sunshine_time
        ```
   
-   5. Tell Weewx about the units for this new type
+   4. Tell Weewx about the units for this new type
         Add this to user/extensions.py:
         ```python
          #
@@ -65,7 +32,7 @@ At the start of weewx, missing archive records imported from the datalogger have
          import weewx.units
          weewx.units.obs_group_dict['sunshine_time'] = 'group_interval'
          ```
-   7. Use [sunshine_time] in your graphs and html template tags.
+   5. Use [sunshine_time] in your graphs and html template tags.
    
    Lots more detail on this process can be found here:http://www.weewx.com/docs/customizing.htm#archive_database
    
@@ -88,48 +55,15 @@ Au démarrage de weewx, des enregistrement d'archives manquants sont éventuelle
                 prep_services = weewx.engine.StdTimeSynch
                 process_services = user.sunduration.SunshineDuration, weewx.engine.StdConvert, weewx.engine.StdCalibrate, weewx.engine.StdQC, weewx.wxservices.StdWXCalculate
    ```
-   3. Ajouter [sunshine_time] au schéma de la base de donnee .
-       Dans weewx.conf, et dans wx-binding changer le schéma : schema= user.sunduration.schema_with_sunshine_time:
-       ### avec sqlite :
-       ```python
-        [DataBindings]
-            [[wx_binding]]
-                # The database must match one of the sections in [Databases].
-                # This is likely to be the only option you would want to change.
-                database = archive_sqlite 
-                # The name of the table within the database
-                table_name = archive
-                # The manager handles aggregation of data for historical summaries
-                manager = weewx.wxmanager.WXDaySummaryManager
-                # The schema defines the structure of the database.
-                # It is *only* used when the database is created.
-                #schema = schemas.wview.schema
-                schema = user.sunduration.schema_with_sunshine_time
-         ```
-       ### avec mysql :
-          ```python
-           [DataBindings]
-               [[wx_binding]]
-                   # The database must match one of the sections in [Databases].
-                   # This is likely to be the only option you would want to change.
-                   database = archive_mysql 
-                   # The name of the table within the database
-                   table_name = archive
-                   # The manager handles aggregation of data for historical summaries
-                   manager = weewx.wxmanager.WXDaySummaryManager
-                   # The schema defines the structure of the database.
-                   # It is *only* used when the database is created.
-                   #schema = schemas.wview.schema
-                   schema = user.sunduration.schema_with_sunshine_time
-          ```
-   4.  Stopper Weewx  et mettre a jour la base de donnee avec le nouveau champ "sunshine_time (Weewx V. 4.5.0 ou plus récent)
+ 
+   3.  Stopper Weewx  et mettre a jour la base de donnee avec le nouveau champ "sunshine_time (Weewx V. 4.5.0 ou plus récent)
        ```python
        wee_database --add-column=sunshine_time
        ```
        et confirmer la création du nouveau champ en pressant "Y"
        
        
-   5. Configurer dans weewx l'unité utilisée pour ce nouveau champ.
+   4. Configurer dans weewx l'unité utilisée pour ce nouveau champ.
       Ajouter à la fin de /usr/share/weewx/user/extensions.py ( ou /home/weewx/bin/user/extensions.py selon l'installation utilisée)
         ```python
          #
@@ -138,7 +72,7 @@ Au démarrage de weewx, des enregistrement d'archives manquants sont éventuelle
          import weewx.units
          weewx.units.obs_group_dict['sunshine_time'] = 'group_interval'
          ```
-   7. Utiliser le tag [sunshine_time] pour vos graphiques ou templates.
+   5. Utiliser le tag [sunshine_time] pour vos graphiques ou templates.
    
    Pour plus de détails sur l'ajout d'un nouveau paramètre, voir::
    http://www.weewx.com/docs/customizing.htm#archive_database
