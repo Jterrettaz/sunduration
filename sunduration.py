@@ -88,7 +88,6 @@ class SunshineDuration(StdService):
                     event.record['sunshine_time'] = event.record['interval']
                 if self.lastdateTime != 0:  # LOOP already started, this is the first regular archive after weewx start
                     self.firstArchive = False
-                
                 loginf("Estimated sunshine duration from archive record= %f min, radiation = %f, and threshold = %f" % (
                     event.record['sunshine_time'], event.record['radiation'], self.lastSeuil))
         else:
@@ -96,7 +95,7 @@ class SunshineDuration(StdService):
                 event.record['sunshine_time'] = self.sunshineSeconds/self.cum_time * event.record['interval']
             else: 
                  event.record['sunshine_time'] = 0
-            loginf("Sunshine duration from loop packets = %f min" % (event.record['sunshine_time'])
+            loginf("Sunshine duration from loop packets = %f min" % (event.record['sunshine_time']))
 
         self.sunshineSeconds = 0
         self.cum_time = 0
