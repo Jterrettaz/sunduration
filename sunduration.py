@@ -44,6 +44,7 @@ except ImportError:
     def logerr(msg):
         logmsg(syslog.LOG_ERR, msg)
 
+weewx.units.obs_group_dict['sunshine_time'] = 'group_interval'
 
 class SunshineDuration(StdService):
     def __init__(self, engine, config_dict):
