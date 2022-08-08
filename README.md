@@ -23,18 +23,9 @@ At the start of weewx, missing archive records imported from the datalogger have
        wee_database --add-column=sunshine_time
        ```
   
-   4. Tell Weewx about the units for this new type
-        Add this to user/extensions.py:
-        ```python
-         #
-         # Units for sunshine_time calculated field
-         #
-         import weewx.units
-         weewx.units.obs_group_dict['sunshine_time'] = 'group_interval'
-         ```
-   5. Use [sunshine_time] in your graphs and html template tags.
+   4. Use [sunshine_time] in your graphs and html template tags.
    
-   Lots more detail on this process can be found here:http://www.weewx.com/docs/customizing.htm#archive_database
+   More detail on this process can be found here:http://www.weewx.com/docs/customizing.htm#archive_database
    
 # sunduration
 Ajoute à Weewx un nouveau paramètre contenant la durée d'ensoleillement: [sunshine_time]
@@ -63,16 +54,7 @@ Au démarrage de weewx, des enregistrement d'archives manquants sont éventuelle
        et confirmer la création du nouveau champ en pressant "Y"
        
        
-   4. Configurer dans weewx l'unité utilisée pour ce nouveau champ.
-      Ajouter à la fin de /usr/share/weewx/user/extensions.py ( ou /home/weewx/bin/user/extensions.py selon l'installation utilisée)
-        ```python
-         #
-         # Units for sunshine_time calculated field
-         #
-         import weewx.units
-         weewx.units.obs_group_dict['sunshine_time'] = 'group_interval'
-         ```
-   5. Utiliser le tag [sunshine_time] pour vos graphiques ou templates.
+   4. Utiliser le tag [sunshine_time] pour vos graphiques ou templates.
    
    Pour plus de détails sur l'ajout d'un nouveau paramètre, voir::
    http://www.weewx.com/docs/customizing.htm#archive_database
