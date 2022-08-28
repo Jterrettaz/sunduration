@@ -102,7 +102,6 @@ class SunshineDuration(StdService):
         self.cum_time = 0
 
     def sunshineThreshold(self, mydatetime):
-        coeff = 0.9  # change to calibrate with your sensor
         utcdate = datetime.utcfromtimestamp(mydatetime)
         dayofyear = int(time.strftime("%j", time.gmtime(mydatetime)))
         theta = 360 * dayofyear / 365
@@ -122,8 +121,8 @@ class SunshineDuration(StdService):
         hauteur_soleil = asin(sin((pi / 180) * latitude) * sin((pi / 180) * declinaison) + cos(
             (pi / 180) * latitude) * cos((pi / 180) * declinaison) * cos((pi / 180) * angle_horaire)) * (180 / pi)
         if hauteur_soleil > 0:
-            seuil = (0.7 + 0.085 * cos((pi / 180) * 360 * dayofyear / 365)) * 1080 * pow(
-                (sin(pi / 180) * hauteur_soleil), 1.25) 
+            seuil = (0.73 + 0.06 * cos((pi / 180) * 360 * dayofyear / 365)) * 1080 * pow(
+                (sin(pi / 180 * hauteur_soleil)), 1.25) 
         else :
             seuil=0
         return seuil
