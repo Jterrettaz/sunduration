@@ -20,6 +20,7 @@ When weewx is started, missing archive records imported from the datalogger have
    ```
 
    3. Shutdown Weewx and update your database to bring in the new field. 
+
       Weewx v4.5.0  to V4.10.2
       ```python
        wee_database --add-column=sunshine_time
@@ -56,6 +57,7 @@ Au démarrage de weewx, des enregistrement d'archives manquants sont éventuelle
    ```
  
    3.  Stopper Weewx  et mettre a jour la base de donnee avec le nouveau champ "sunshine_time
+
        Weewx V. 4.5.0 to 4.10.2 :
        ```python
        wee_database --add-column=sunshine_time
