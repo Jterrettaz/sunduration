@@ -19,12 +19,18 @@ When weewx is started, missing archive records imported from the datalogger have
                 process_services =  weewx.engine.StdConvert, weewx.engine.StdCalibrate, weewx.engine.StdQC, weewx.wxservices.StdWXCalculate, user.sunduration.SunshineDuration,
    ```
 
-   3. Shutdown Weewx and update your database to bring in the new field. (Weewx v4.5.0 or newer)
-       ```python
+   3. Shutdown Weewx and update your database to bring in the new field. 
+      Weewx v4.5.0  to V4.10.2
+      ```python
        wee_database --add-column=sunshine_time
        ```
+
+      Weewx V. 5.0 or newer :
+       ```python
+       weectl database add-column sunshine_time
+       ```
   
-   4. Use [sunshine_time] in your graphs and html template tags.
+   5. Use [sunshine_time] in your graphs and html template tags.
    
    More detail on this process can be found here:http://www.weewx.com/docs/customizing.htm#archive_database
    
@@ -49,14 +55,19 @@ Au démarrage de weewx, des enregistrement d'archives manquants sont éventuelle
                 process_services = weewx.engine.StdConvert, weewx.engine.StdCalibrate, weewx.engine.StdQC, weewx.wxservices.StdWXCalculate, user.sunduration.SunshineDuration
    ```
  
-   3.  Stopper Weewx  et mettre a jour la base de donnee avec le nouveau champ "sunshine_time (Weewx V. 4.5.0 ou plus récent)
+   3.  Stopper Weewx  et mettre a jour la base de donnee avec le nouveau champ "sunshine_time
+       Weewx V. 4.5.0 to 4.10.2 :
        ```python
        wee_database --add-column=sunshine_time
        ```
-       et confirmer la création du nouveau champ en pressant "Y"
+
+       Weewx V. 5.0 ou plus récent :
+       ```python
+       weectl database add-column sunshine_time
+       ```
        
        
-   4. Utiliser le tag [sunshine_time] pour vos graphiques ou templates.
+   5. Utiliser le tag [sunshine_time] pour vos graphiques ou templates.
    
    Pour plus de détails sur l'ajout d'un nouveau paramètre, voir::
    http://www.weewx.com/docs/customizing.htm#archive_database
