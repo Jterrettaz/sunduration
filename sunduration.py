@@ -80,10 +80,10 @@ class SunshineDuration(StdService):
     def newArchiveRecord(self, event):
         """Gets called on a new archive record event."""
         radiation = event.record.get('radiation')
+        seuil = self.sunshineThreshold(event.record.get('dateTime'))
         if self.lastdateTime == 0 or self.firstArchive:  # LOOP packets not yet captured : missing archive record extracted from datalogger at start OR first archive record after weewx start
             event.record['sunshine_time'] = 0.0
             if radiation is not None:
-                seuil = self.sunshineThreshold(event.record.get('dateTime'))
                 self.lastSeuil = seuil
                 if radiation > seuil and seuil > 0:
                     event.record['sunshine_time'] = event.record['interval']
