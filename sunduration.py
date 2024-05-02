@@ -72,6 +72,9 @@ class SunshineDuration(StdService):
             seuil = self.sunshineThreshold(event.packet.get('dateTime'))
             if radiation > seuil and seuil > 0:
                 self.sunshineSeconds += self.LoopDuration
+                event.packet['is_sunshine']=1
+            else:
+                 event.packet['is_sunshine']=0
             self.cum_time += self.LoopDuration
             self.lastSeuil = seuil
             logdbg("Calculated LOOP sunshine_time = %f, based on radiation = %f, and threshold = %f" % (
