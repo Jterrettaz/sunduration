@@ -79,8 +79,8 @@ class SunshineDuration(StdService):
 
     def newArchiveRecord(self, event):
         """Gets called on a new archive record event."""
+        radiation = event.record.get('radiation')
         if self.lastdateTime == 0 or self.firstArchive:  # LOOP packets not yet captured : missing archive record extracted from datalogger at start OR first archive record after weewx start
-            radiation = event.record.get('radiation')
             event.record['sunshine_time'] = 0.0
             if radiation is not None:
                 seuil = self.sunshineThreshold(event.record.get('dateTime'))
@@ -95,10 +95,11 @@ class SunshineDuration(StdService):
                 loginf("Estimated sunshine duration from archive record= %f min, radiation = %f, and threshold = %f" % (
                     event.record['sunshine_time'], event.record['radiation'], self.lastSeuil))
         else:
-             if radiation > seuil and seuil > 0:
-                    event.record['is_sunshine']=1
-              else:
-                    event.record['is_sunshine']=0
+             if radiation is not None:
+                 if radiation > seuil and seuil > 0:
+                        event.record['is_sunshine']=1
+                  else:
+                        event.record['is_sunshine']=0
             if self.cum_time > 0:  # do not divide by zero!
                 event.record['sunshine_time'] = self.sunshineSeconds/self.cum_time * event.record['interval']
             else: 
