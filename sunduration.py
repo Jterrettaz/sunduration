@@ -60,6 +60,9 @@ class SunshineDuration(StdService):
         self.lastSeuil = 0
         self.firstArchive = True
         self.cum_time=0
+        d = config_dict.get('Sunduration', {})
+        self.global_coeff = float(d.get('global_coeff', 1.0))
+        self.B_coeff = float(d.get('B_coeff', 0.06))
 
     def newLoopPacket(self, event):
         """Gets called on a new loop packet event."""
@@ -129,8 +132,8 @@ class SunshineDuration(StdService):
         hauteur_soleil = asin(sin((pi / 180) * latitude) * sin((pi / 180) * declinaison) + cos(
             (pi / 180) * latitude) * cos((pi / 180) * declinaison) * cos((pi / 180) * angle_horaire)) * (180 / pi)
         if hauteur_soleil > 3:
-            seuil = (0.73 + 0.06 * cos((pi / 180) * 360 * dayofyear / 365)) * 1080 * pow(
-                (sin(pi / 180 * hauteur_soleil)), 1.25) 
+            seuil = (0.73 + self.B_coeff * cos((pi / 180) * 360 * dayofyear / 365)) * 1080 * pow(
+                (sin(pi / 180 * hauteur_soleil)), 1.25) * self.global_coeff
         else :
             seuil=0
         return seuil

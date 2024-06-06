@@ -6,10 +6,21 @@ This weewx extension was modified from https://github.com/brewster76/util-archer
 This extension determine for each LOOP data a threshold value that is calculated depending on the date, time and geographic location (latitude and longitude) of the sensor. If the measured solar radiation is higher than the calculated threshold, the sunshine duration for this measurement will be equal to the time interval between the last LOOP and the current LOOP.  The final archive record contain( in minutes) the sum of each LOOP value within the archive period.
 When weewx is started, missing archive records imported from the datalogger have no loop data, and the first regular archive record has only partial loop data, so for these records if the measured solar radiation is higher than the threshold, the sunsine duration for this record is equal to the archive interval.
 
+## Coefficients
+By default, the coefficients of the formula used to calculate the radiation thresold are the one validated for a latitude of 44° in the south of France.
+If, for your location and your weather station, the threshold is too low or too high, you can adjust globallty the value of the parameter global_coeff.
+
+For instance, a value of global_coeff = 1.05 will globally increase the thresholf value by 5%
+A value of global_coeff = 0.95 will globally decrease the threshold value by 5%
+
+The B_coeff can be changed if you observe that the threshold needs to be adjuster only for winter or summer period.
+
+For instance, a value of B_coeff = 0.08  will increase the threshold value by about 3% in winter, and will decrease the threshold value by about 3% in summer.
+A value of B_coeff = 0.04 will decrease the threshold value by about 3% in winter, and will increase the threshold value by about 3% in summer.
 ## Installation
   1. Save the file "sunduration.py" to your user customisations directory (which is often /usr/share/weewx/user or /home/weewx/bin/user)
   2. Enable this service in weewx.conf by adding user.sunduration.SunshineDuration to the process_services list.
-  ```python
+```python
         [Engine]
             [[Services]]
                 # This section specifies the services that should be run. They are
@@ -17,19 +28,26 @@ When weewx is started, missing archive records imported from the datalogger have
                 # determines the order in which the services will be run.
                 prep_services = weewx.engine.StdTimeSynch
                 process_services =  weewx.engine.StdConvert, weewx.engine.StdCalibrate, weewx.engine.StdQC, weewx.wxservices.StdWXCalculate, user.sunduration.SunshineDuration,
-   ```
+ ```
+   3. Add the following lines to weewx.conf :
+```python
+       [Sunduration]
+            global_coeff = 1.0
+            B_coeff = 0.06
+            
+```
+       
+4. Shutdown Weewx and update your database to bring in the new field. 
 
-   3. Shutdown Weewx and update your database to bring in the new field. 
-
-      Weewx v4.5.0  to V4.10.2
-      ```python
+Weewx v4.5.0  to V4.10.2
+```python
        wee_database --add-column=sunshine_time
-       ```
+```
 
-      Weewx V. 5.0 or newer :
-       ```python
+Weewx V. 5.0 or newer :
+```python
        weectl database add-column sunshine_time
-       ```
+```
   
    5. Use [sunshine_time] in your graphs and html template tags.
    
@@ -46,7 +64,7 @@ Au démarrage de weewx, des enregistrement d'archives manquants sont éventuelle
 ## Installation
   1. Copier ce fichier "sunduration.py" dans le dossier "utilisateur" de weewx (le plus souvent  /usr/share/weewx/user  ou /home/weewx/bin/user)
   2. Activer ce service dans  weewx.conf en ajoutant user.sunduration.SunshineDuration dans la liste process_services:
-  ```python
+```python
         [Engine]
             [[Services]]
                 # This section specifies the services that should be run. They are
@@ -54,19 +72,27 @@ Au démarrage de weewx, des enregistrement d'archives manquants sont éventuelle
                 # determines the order in which the services will be run.
                 prep_services = weewx.engine.StdTimeSynch
                 process_services = weewx.engine.StdConvert, weewx.engine.StdCalibrate, weewx.engine.StdQC, weewx.wxservices.StdWXCalculate, user.sunduration.SunshineDuration
-   ```
- 
-   3.  Stopper Weewx  et mettre a jour la base de donnee avec le nouveau champ "sunshine_time
+```
+ 3. Ajouter les lignes suivantes dans weewx.conf :
+```python
+       [Sunduration]
+            global_coeff = 1.0
+            B_coeff = 0.06
+            
+```
+       
+4. Stopper Weewx  et mettre a jour la base de donnee avec le nouveau champ "sunshine_time
 
-       Weewx V. 4.5.0 to 4.10.2 :
-       ```python
+Weewx V. 4.5.0 to 4.10.2 :
+
+```python
        wee_database --add-column=sunshine_time
-       ```
+```
 
-       Weewx V. 5.0 ou plus récent :
-       ```python
+Weewx V. 5.0 ou plus récent :
+```python
        weectl database add-column sunshine_time
-       ```
+```
        
        
    5. Utiliser le tag [sunshine_time] pour vos graphiques ou templates.
