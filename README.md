@@ -8,15 +8,15 @@ When weewx is started, missing archive records imported from the datalogger have
 
 ## Coefficients
 By default, the coefficients of the formula used to calculate the radiation thresold are the one validated for a latitude of 44° in the south of France.
-If, for your location and your weather station, the threshold is too low or too high, you can adjust globallty the value of the parameter global_coeff.
+If, for your location and your weather station, the threshold is too low or too high, you can adjust globallty the value of the parameter **global_coeff**.
 
 For instance, a value of global_coeff = 1.05 will globally increase the thresholf value by 5%
 A value of global_coeff = 0.95 will globally decrease the threshold value by 5%
 
-The B_coeff can be changed if you observe that the threshold needs to be adjuster only for winter or summer period.
+The **B_coeff** can be changed if you observe that the threshold needs to be adjusted only for winter or summer period.
 
-For instance, a value of B_coeff = 0.08  will increase the threshold value by about 3% in winter, and will decrease the threshold value by about 3% in summer.
-A value of B_coeff = 0.04 will decrease the threshold value by about 3% in winter, and will increase the threshold value by about 3% in summer.
+For instance, a value of **B_coeff = 0.08**  will increase the threshold value by about 3% in winter, and will decrease the threshold value by about 3% in summer.
+A value of **B_coeff = 0.04** will decrease the threshold value by about 3% in winter, and will increase the threshold value by about 3% in summer.
 ## Installation
   1. Save the file "sunduration.py" to your user customisations directory (which is often /usr/share/weewx/user or /home/weewx/bin/user)
   2. Enable this service in weewx.conf by adding user.sunduration.SunshineDuration to the process_services list.
