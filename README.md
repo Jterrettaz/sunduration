@@ -9,7 +9,7 @@ When weewx is started, missing archive records imported from the datalogger have
 By default, the coefficients of the formula used to calculate the radiation threshold are the one validated for a latitude of 44° in the south of France.
 If, for your location and your weather station, the threshold is too low or too high, you can adjust globallty the value of the parameter **global_coeff**.
 
-For instance, a value of **global_coeff = 1.05** will globally increase the thresholf value by 5%
+For instance, a value of **global_coeff = 1.05** will globally increase the threshold value by 5%
 A value of **global_coeff = 0.95** will globally decrease the threshold value by 5%.
 
 
