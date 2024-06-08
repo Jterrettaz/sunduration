@@ -7,7 +7,7 @@ When weewx is started, missing archive records imported from the datalogger have
 
 ## Coefficients
 By default, the coefficients of the formula used to calculate the radiation threshold are the one validated for a latitude of 44°N in the south of France using a pyranometer.
-If, for your location and your weather station ( **and particularly if you are using a luxmeter with a reduced spectral range compared to pyranometers**) the threshold is too low or too high, you will have to adjust by trial and error the value of the parameter **global_coeff** until at the best the extension  will reports sunshine when shadows are visible, and no sunshine when there  is no shadows.
+If, for your location and your weather station the threshold is too low or too high ( **and particularly if you are using a luxmeter with a reduced spectral range compared to pyranometers**), you will have to adjust by trial and error the value of the parameter **global_coeff** until at the best the extension will report sunshine when shadows are visible, and no sunshine when there  is no shadows.
 
 For instance, a value of **global_coeff = 1.05** will globally increase the threshold value by 5%
 A value of **global_coeff = 0.95** will globally decrease the threshold value by 5%.
