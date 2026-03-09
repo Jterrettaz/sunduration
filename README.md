@@ -20,7 +20,7 @@ A value of **B_coeff = 0.04** will decrease the threshold value by about 3% in w
 
 A variability of **global_coeff** and **B_coeff** has been observed in relation to latitude : **B_coeff** tends toward negative values for the southern hemisphere, while **global_coeff** decreases with latitude
 ## Installation
-  1. Save the file "sunduration.py" to your user customisations directory (which is often /usr/share/weewx/user or /home/weewx/bin/user or ~/weewx-data/bin/user/ id weewx has been installed with pip)
+  1. Save the file "sunduration.py" to your user customisations directory (which is often /usr/share/weewx/user or /home/weewx/bin/user or ~/weewx-data/bin/user/  if weewx has been installed with pip)
   2. Enable this service in weewx.conf by adding user.sunduration.SunshineDuration to the process_services list.
 ```python
         [Engine]
