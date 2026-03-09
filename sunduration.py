@@ -3,6 +3,7 @@ from math import sin, cos, pi, asin
 from datetime import datetime
 import time
 import weewx
+import weedb
 from weewx.wxengine import StdService
 
 try:
@@ -55,6 +56,7 @@ class SunshineDuration(StdService):
         # Start intercepting events:
         self.bind(weewx.NEW_LOOP_PACKET, self.newLoopPacket)
         self.bind(weewx.NEW_ARCHIVE_RECORD, self.newArchiveRecord)
+        self.db_manager = self.engine.db_binder.get_manager('wx_binding')
         self.lastdateTime = 0
         self.LoopDuration = 0
         self.sunshineSeconds = 0
