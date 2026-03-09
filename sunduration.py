@@ -45,6 +45,7 @@ except ImportError:
         logmsg(syslog.LOG_ERR, msg)
 
 weewx.units.obs_group_dict['sunshine_time'] = 'group_interval'
+weewx.units.obs_group_dict['daySunshine_time'] = 'group_interval'
 
 class SunshineDuration(StdService):
     def __init__(self, engine, config_dict):
@@ -79,6 +80,8 @@ class SunshineDuration(StdService):
             self.lastSeuil = seuil
             logdbg("Calculated LOOP sunshine_time = %f, based on radiation = %f, and threshold = %f" % (
                 self.LoopDuration, radiation, seuil))
+        event.packet['daySunshine_time'] = self.calc_sunshine_time_day(event.packet['dateTime']) + self.sunshineSeconds / 60  
+        # Total sunshine time (unit : minutes) since last archive record + accumuated seconds of loop sunshine time
 
     def newArchiveRecord(self, event):
         """Gets called on a new archive record event."""
@@ -137,4 +140,22 @@ class SunshineDuration(StdService):
         else :
             seuil=0
         return seuil
+
+    def calc_sunshine_time_day(self, ts):
+        """Calculate the sunshine duration (from archive database) since the beginning of the day. """
+        ets = ts
+        sts = weeutil.weeutil.startOfDay(ts)
+        try:
+            sd = 0.0
+            for row in self.db_manager.genSql("SELECT sunshine_time"
+                                              " FROM %s"
+                                              " WHERE dateTime>? AND dateTime<=?" %
+                                              self.db_manager.table_name, (sts, ets)):
+                if row is None or None in row:
+                    continue
+                sd += row[0]
+
+        except weedb.DatabaseError:
+            pass
+        return sd
 
